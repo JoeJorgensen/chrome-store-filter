@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /* Add your CSS styles here */
+    </style>
+  </head>
+  <body>
+    <form id="filter-form">
+      <label>Minimum rating:</label>
+      <input type="number" min="0" max="5" step="0.5" name="rating" value="4.5">
+      <br>
+      <label>Minimum number of users:</label>
+      <input type="number" min="0" name="users" value="1000">
+      <br>
+      <button type="submit">Save</button>
+    </form>
+    <script>
+      // Save the filters when the form is submitted
+      document.getElementById('filter-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const filters = {
+          rating: formData.get('rating'),
+          users: formData.get('users')
+        };
+        chrome.storage.local.set({filters: filters}, () => {
+          console.log('Filters saved');
+        });
+      });
+    </script>
+  </body>
+</html>
